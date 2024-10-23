@@ -87,6 +87,7 @@ namespace Bloxstrap
             Logger.WriteLine("App::GlobalExceptionHandler", "An exception occurred");
 
             FinalizeExceptionHandling(e.Exception);
+            HandleCrashEvent(e.Exception);
         }
 
         public static void FinalizeExceptionHandling(AggregateException ex)
@@ -307,6 +308,12 @@ namespace Bloxstrap
             }
 
             // you must *explicitly* call terminate when everything is done, it won't be called implicitly
+        }
+
+        private void HandleCrashEvent(Exception ex)
+        {
+            // Implement logic to handle crash events
+            // This is a placeholder implementation
         }
     }
 }

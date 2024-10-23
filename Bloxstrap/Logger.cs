@@ -109,7 +109,14 @@
             History.Add(outlog);
         }
 
-        public void WriteLine(string identifier, string message) => WriteLine($"[{identifier}] {message}");
+        public void WriteLine(string identifier, string message)
+        {
+            WriteLine($"[{identifier}] {message}");
+            if (message.Contains("crash", StringComparison.OrdinalIgnoreCase))
+            {
+                LogCrashEvent(identifier, message);
+            }
+        }
 
         public void WriteException(string identifier, Exception ex)
         {
@@ -136,6 +143,12 @@
             {
                 _semaphore.Release();
             }
+        }
+
+        private void LogCrashEvent(string identifier, string message)
+        {
+            string crashLogMessage = $"[{identifier}] Crash event detected: {message}";
+            WriteLine(crashLogMessage);
         }
     }
 }

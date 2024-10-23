@@ -107,6 +107,12 @@ namespace Bloxstrap
             while (Utilities.GetProcessesSafe().Any(x => x.Id == _watcherData.ProcessId))
                 await Task.Delay(1000);
 
+            if (CheckIfRobloxCrashed())
+            {
+                App.Logger.WriteLine("Watcher::Run", "Roblox has crashed");
+                Frontend.ShowPlayerErrorDialog(true);
+            }
+
             if (_watcherData.AutoclosePids is not null)
             {
                 foreach (int pid in _watcherData.AutoclosePids)
@@ -115,6 +121,13 @@ namespace Bloxstrap
 
             if (App.LaunchSettings.TestModeFlag.Active)
                 Process.Start(Paths.Process, "-settings -testmode");
+        }
+
+        private bool CheckIfRobloxCrashed()
+        {
+            // Implement logic to check if Roblox has crashed
+            // This is a placeholder implementation
+            return false;
         }
 
         public void Dispose()
